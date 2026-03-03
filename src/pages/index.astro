@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import SpringYellow from '../components/SpringYellow.astro';
+import Gallery from '../components/Gallery.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import { getGalleryItems, getSpringPhotos } from '../lib/pb';
+import { FALLBACK_GALLERY, FALLBACK_SPRING } from '../lib/fallback';
+
+const [pbGallery, pbSpring] = await Promise.all([
+  getGalleryItems(),
+  getSpringPhotos(),
+]);
+
+const galleryItems = pbGallery.length > 0 ? pbGallery : FALLBACK_GALLERY;
+const springPhotos = pbSpring.length > 0 ? pbSpring : FALLBACK_SPRING;
+---
+
+<Layout
+  title="Pétalos Mary — Florería artesanal en Ciudad de México"
+  description="Arreglos florales únicos para bodas, eventos, cumpleaños y más. Flores frescas con entrega a domicilio en CDMX. Diseños artesanales desde 2010."
+>
+  <Navbar />
+  <main>
+    <SpringYellow amarillas={springPhotos} />
+    <Hero />
+    <Gallery items={galleryItems} />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>

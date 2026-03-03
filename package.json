@@ -1,0 +1,24 @@
+{
+  "name": "petalos-mary",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "node dist/server/entry.mjs",
+    "start:prod": "HOST=0.0.0.0 PORT=4321 node dist/server/entry.mjs",
+    "seed": "node pb_seed.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.5.4",
+    "@astrojs/sitemap": "^3.7.0",
+    "astro": "^5.18.0",
+    "pocketbase": "^0.26.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.3"
+  }
+}

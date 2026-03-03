@@ -1,0 +1,244 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Pétalos Mary — Florería artesanal',
+  description = 'Arreglos florales únicos para cada momento especial. Bodas, eventos, regalos y más.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#b85c7a" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://petalosmary.com" />
+    <meta property="og:image" content="https://petalosmary.com/images/IMG-20241122-WA0002.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <link rel="canonical" href="https://petalosmary.com" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+
+    <!-- Schema.org LocalBusiness -->
+    <script type="application/ld+json" is:inline>{
+      "@context": "https://schema.org",
+      "@type": "Florist",
+      "name": "Pétalos Mary",
+      "description": "Florería artesanal de arreglos florales únicos para bodas, eventos, regalos y más.",
+      "url": "https://petalosmary.com",
+      "telephone": "+522371113802",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "San José Buenavista",
+        "addressRegion": "Puebla",
+        "addressCountry": "MX"
+      },
+      "openingHoursSpecification": [
+        {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"19:00"},
+        {"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"10:00","closes":"15:00"}
+      ],
+      "priceRange": "$$",
+      "image": "https://petalosmary.com/images/IMG-20241122-WA0002.jpg"
+    }</script>
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      });
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* ── Reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── Custom properties ── */
+  :root {
+    --color-primary:     #d63384; /* Mas vivo */
+    --color-primary-dark:#b82b70;
+    --color-accent:      #fff0f6;
+    --color-accent-dark: #ffdeeb;
+    --color-bg:          #fffafb;
+    --color-surface:     #ffffff;
+    --color-text:        #212529;
+    --color-text-muted:  #495057;
+    --color-border:      #f8d7da;
+    --font-display:      'Playfair Display', Georgia, serif;
+    --font-body:         'Inter', system-ui, sans-serif;
+    --radius-sm:         8px;
+    --radius-md:         16px;
+    --radius-lg:         32px;
+    --shadow-sm:         0 2px 8px rgba(214,51,132,.08);
+    --shadow-md:         0 8px 32px rgba(214,51,132,.12);
+    --shadow-lg:         0 24px 72px rgba(214,51,132,.18);
+    --transition:        350ms cubic-bezier(.4, 0, .2, 1);
+    --max-w:             1200px;
+    --section-py:        6rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { display: block; max-width: 100%; }
+  a   { color: inherit; text-decoration: none; }
+
+  /* ── Utility ── */
+  .container {
+    width: 100%;
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+  }
+
+  .section { padding-block: var(--section-py); }
+
+  .section-label {
+    display: inline-block;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: .75rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.18;
+    color: var(--color-text);
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--color-primary);
+  }
+
+  .section-body {
+    font-size: 1.0625rem;
+    color: var(--color-text-muted);
+    max-width: 58ch;
+    line-height: 1.75;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .8rem 1.75rem;
+    border-radius: var(--radius-lg);
+    font-size: .9375rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    border: 2px solid transparent;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 16px rgba(184,92,122,.35);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(184,92,122,.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  .btn-outline:hover {
+    background: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  /* ── Divider ── */
+  .petal-divider {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--color-accent-dark);
+    margin-block: .5rem;
+    user-select: none;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-accent-dark);
+    border-radius: 99px;
+    border: 3px solid var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+</style>
