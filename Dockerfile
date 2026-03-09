@@ -6,9 +6,6 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-# Build arg so Astro knows the PB URL at build time (SSR = runtime, so this is only for type checks)
-ARG PB_URL=http://pocketbase:8090
-ENV PB_URL=$PB_URL
 
 RUN npm run build
 

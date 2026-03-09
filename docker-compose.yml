@@ -4,13 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        PB_URL: http://pocketbase:8090
     image: petalosmary:latest
     container_name: petalosmary_web
     environment:
-      PB_URL: http://pocketbase:8090
-      PUBLIC_PB_URL: https://petalosmarycms.lsoft.me
       HOST: 0.0.0.0
       PORT: 4321
     ports:
@@ -20,29 +16,6 @@ services:
       - ./public/images:/app/dist/client/images
     networks:
       - proxy-net
-    depends_on:
-      pocketbase:
-        condition: service_healthy
-    restart: unless-stopped
-
-  # ── PocketBase CMS ───────────────────────────────────────────────
-  pocketbase:
-    image: ghcr.io/muchobien/pocketbase:latest
-    container_name: petalosmary_cms
-    ports:
-      - "8090:8090"
-    volumes:
-      - ./pb_data:/pb_data
-    environment:
-      - PB_ADMIN_EMAIL=admin@petalosmary.com
-      - PB_ADMIN_PASSWORD=PetalosMary2026*
-    networks:
-      - proxy-net
-    healthcheck:
-      test: [ "CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8090/api/health" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     restart: unless-stopped
 
 networks:

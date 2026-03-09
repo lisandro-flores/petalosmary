@@ -1,6 +1,6 @@
 ---
 import { FALLBACK_GALLERY } from '../lib/fallback';
-import type { GalleryItem } from '../lib/pb';
+import type { GalleryItem } from '../lib/fallback';
 
 interface Props { items?: GalleryItem[]; }
 const { items = FALLBACK_GALLERY } = Astro.props;

@@ -6,16 +6,10 @@ import SpringYellow from '../components/SpringYellow.astro';
 import Gallery from '../components/Gallery.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
-import { getGalleryItems, getSpringPhotos } from '../lib/pb';
 import { FALLBACK_GALLERY, FALLBACK_SPRING } from '../lib/fallback';
 
-const [pbGallery, pbSpring] = await Promise.all([
-  getGalleryItems(),
-  getSpringPhotos(),
-]);
-
-const galleryItems = pbGallery.length > 0 ? pbGallery : FALLBACK_GALLERY;
-const springPhotos = pbSpring.length > 0 ? pbSpring : FALLBACK_SPRING;
+const galleryItems = FALLBACK_GALLERY;
+const springPhotos = FALLBACK_SPRING;
 ---
 
 <Layout

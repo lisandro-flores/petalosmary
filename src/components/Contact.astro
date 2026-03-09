@@ -1,6 +1,4 @@
 ---
-import { getSettings } from '../lib/pb';
-
 const defaults: Record<string, string> = {
   address: 'San José Buenavista, Puebla',
   phone:   '+52 (237) 111 3802',
@@ -8,8 +6,7 @@ const defaults: Record<string, string> = {
   hours:   'Lun – Sáb: 9:00 am – 7:00 pm\nDomingo: 10:00 am – 3:00 pm',
 };
 
-const s = await getSettings(['address','phone','email','hours']);
-const get = (k: string) => s[k] ?? defaults[k];
+const get = (k: string) => defaults[k];
 
 const info = [
   {
