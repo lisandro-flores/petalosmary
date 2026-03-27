@@ -21,7 +21,8 @@ const displayItems = items.slice(0, 6);
         <button
           type="button"
           class="gallery__item"
-          onclick={`openGalleryModal('${item.src}', '${item.alt.replace(/'/g, "\\'")}', '${idx}')`}
+          data-src={item.src}
+          data-alt={item.alt}
           aria-label={`Ver: ${item.alt}`}
         >
           <img
@@ -47,9 +48,9 @@ const displayItems = items.slice(0, 6);
 
   <!-- Modal de galería -->
   <div id="gallery-modal" class="gallery-modal" style="display: none;">
-    <div class="gallery-modal__overlay" onclick="closeGalleryModal()"></div>
+    <div class="gallery-modal__overlay" data-gallery-overlay></div>
     <div class="gallery-modal__content">
-      <button type="button" class="gallery-modal__close" onclick="closeGalleryModal()">✕</button>
+      <button type="button" class="gallery-modal__close" data-gallery-close>✕</button>
       <img id="gallery-modal-img" src="" alt="" class="gallery-modal__image" />
       <div class="gallery-modal__footer">
         <p id="gallery-modal-alt" class="gallery-modal__alt"></p>
@@ -335,30 +336,46 @@ const displayItems = items.slice(0, 6);
 </style>
 
 <script>
-  function openGalleryModal(src: string, alt: string, idx: string) {
-    const modal = document.getElementById('gallery-modal') as HTMLDivElement;
-    const img = document.getElementById('gallery-modal-img') as HTMLImageElement;
-    const altText = document.getElementById('gallery-modal-alt') as HTMLParagraphElement;
-    const cta = document.getElementById('gallery-modal-cta') as HTMLAnchorElement;
+  const galleryModal = document.getElementById('gallery-modal') as HTMLDivElement | null;
+  const galleryModalImg = document.getElementById('gallery-modal-img') as HTMLImageElement | null;
+  const galleryModalAlt = document.getElementById('gallery-modal-alt') as HTMLParagraphElement | null;
+  const galleryModalCta = document.getElementById('gallery-modal-cta') as HTMLAnchorElement | null;
 
-    img.src = src;
-    img.alt = alt;
-    altText.textContent = alt;
+  function openGalleryModal(src: string, alt: string) {
+    if (!galleryModal || !galleryModalImg || !galleryModalAlt || !galleryModalCta) return;
 
-    // Construir URL con imagen y alt
+    galleryModalImg.src = src;
+    galleryModalImg.alt = alt;
+    galleryModalAlt.textContent = alt;
+
     const imgUrl = window.location.origin + (src.startsWith('/') ? src : '/' + src);
-    const whatsappText = `Hola! Me interesa este arreglo 🌸\n\n*${alt}*\n\nImagen: ${imgUrl}`;
-    cta.href = `https://wa.me/5212371113802?text=${encodeURIComponent(whatsappText)}`;
+    const whatsappText = `Hola, me interesa este arreglo.\n\n*${alt}*\n\nImagen: ${imgUrl}`;
+    galleryModalCta.href = `https://wa.me/5212371113802?text=${encodeURIComponent(whatsappText)}`;
 
-    modal.style.display = 'flex';
+    galleryModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
 
   function closeGalleryModal() {
-    const modal = document.getElementById('gallery-modal') as HTMLDivElement;
-    modal.style.display = 'none';
+    if (!galleryModal) return;
+    galleryModal.style.display = 'none';
     document.body.style.overflow = 'auto';
   }
+
+  document.querySelectorAll<HTMLElement>('.gallery__item').forEach((button) => {
+    button.addEventListener('click', () => {
+      const src = button.dataset.src;
+      const alt = button.dataset.alt;
+      if (src && alt) openGalleryModal(src, alt);
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-gallery-close]').forEach((button) => {
+    button.addEventListener('click', closeGalleryModal);
+  });
+
+  const galleryModalOverlay = document.querySelector<HTMLElement>('[data-gallery-overlay]');
+  galleryModalOverlay?.addEventListener('click', closeGalleryModal);
 
   // Cerrar modal al presionar ESC
   document.addEventListener('keydown', (e) => {

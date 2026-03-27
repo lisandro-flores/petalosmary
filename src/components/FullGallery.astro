@@ -6,6 +6,10 @@ const allImages = [
   ...FALLBACK_SPRING.map(img => ({ ...img, type: 'amarillas' })),
   ...FALLBACK_GALLERY.map(img => ({ ...img, type: img.category })),
 ];
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://petalosmary.ngicode.com';
+
+const getImageUrl = (src: string) => new URL(src, siteUrl).toString();
 ---
 
 <div class="gallery-modal" id="galleryModal" hidden>
@@ -22,7 +26,7 @@ const allImages = [
     <div class="gallery-modal__grid">
       {allImages.map((img, idx) => (
         <a
-          href={`https://wa.me/5212371113802?text=Hola%2C%20me%20interesa%20este%20arreglo:%20${encodeURIComponent(img.alt)}`}
+          href={`https://wa.me/5212371113802?text=${encodeURIComponent(`Hola, me interesa este arreglo:\n\n*${img.alt}*\n\nImagen: ${getImageUrl(img.src)}`)}`}
           class="gallery-modal__item"
           target="_blank"
           rel="noreferrer"
