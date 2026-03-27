@@ -1,10 +1,8 @@
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://petalosmary.com',
-  output: 'server',
-  adapter: node({ mode: 'standalone' }),
+  site: 'https://petalosmary.ngicode.com',
+  output: 'static',
   integrations: [sitemap()],
 });

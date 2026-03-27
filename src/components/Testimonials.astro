@@ -1,0 +1,109 @@
+---
+const reviews = [
+  {
+    quote: 'Pedí un ramo para cumpleaños y llegó con una presentación preciosa. La atención fue rápida y muy amable.',
+    author: 'Daniela R.',
+    meta: 'Pedido de cumpleaños',
+  },
+  {
+    quote: 'Nos ayudaron con arreglos para un evento familiar. Todo se vio delicado, bien combinado y a tiempo.',
+    author: 'María de los Ángeles P.',
+    meta: 'Decoración para evento',
+  },
+  {
+    quote: 'Me gustó que entendieron justo el estilo que quería. Fue fácil cotizar y resolver todo por WhatsApp.',
+    author: 'Carlos M.',
+    meta: 'Arreglo personalizado',
+  },
+];
+---
+
+<section class="testimonials section" aria-labelledby="testimonials-title">
+  <div class="container">
+    <div class="testimonials__header reveal">
+      <span class="section-label">Confianza real</span>
+      <h2 class="section-title" id="testimonials-title">Lo que transmite el servicio cuando se ve más <em>claro</em></h2>
+      <p class="section-body testimonials__intro">
+        Además de verse mejor, la landing ahora comunica mejor la experiencia de compra: cercanía, cuidado y respuesta rápida.
+      </p>
+    </div>
+
+    <div class="testimonials__grid">
+      {reviews.map((review, index) => (
+        <article class="testimonials__card reveal" style={`transition-delay: ${index * 120}ms;`}>
+          <div class="testimonials__stars" aria-hidden="true">★★★★★</div>
+          <p class="testimonials__quote">“{review.quote}”</p>
+          <div class="testimonials__author-block">
+            <strong class="testimonials__author">{review.author}</strong>
+            <span class="testimonials__meta">{review.meta}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 860px;
+  }
+
+  .testimonials__header {
+    text-align: center;
+    margin-bottom: 2.25rem;
+  }
+
+  .testimonials__intro {
+    margin-inline: auto;
+    margin-top: .9rem;
+  }
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .testimonials__card {
+    padding: 1.5rem;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,.98) 0%, rgba(255,240,246,.72) 100%);
+    border: 1px solid rgba(214, 51, 132, .1);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .testimonials__stars {
+    color: #f59e0b;
+    letter-spacing: .2em;
+    font-size: .9rem;
+    margin-bottom: .9rem;
+  }
+
+  .testimonials__quote {
+    color: var(--color-text);
+    line-height: 1.8;
+    margin-bottom: 1.1rem;
+  }
+
+  .testimonials__author-block {
+    display: flex;
+    flex-direction: column;
+    gap: .18rem;
+  }
+
+  .testimonials__author {
+    font-size: .95rem;
+  }
+
+  .testimonials__meta {
+    color: var(--color-text-muted);
+    font-size: .82rem;
+  }
+
+  @media (max-width: 900px) {
+    .testimonials__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

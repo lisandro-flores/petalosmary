@@ -1,0 +1,90 @@
+---
+const faqs = [
+  {
+    q: '¿Con cuánta anticipación debo pedir?',
+    a: 'Para fechas especiales te recomendamos apartar con 2 a 5 días. Para pedidos urgentes, escríbenos y revisamos disponibilidad.',
+  },
+  {
+    q: '¿Manejan entregas fuera de San José Buenavista?',
+    a: 'Sí, atendemos zonas cercanas en Puebla con costo de envío según distancia y horario de entrega.',
+  },
+  {
+    q: '¿Puedo pedir algo personalizado con presupuesto definido?',
+    a: 'Claro. Compartiendo tu rango de presupuesto te proponemos opciones viables sin perder estilo ni presentación.',
+  },
+  {
+    q: '¿Qué métodos de pago aceptan?',
+    a: 'Coordinamos pago por transferencia o efectivo según el tipo de entrega y confirmación del pedido.',
+  },
+];
+---
+
+<section class="faq section" aria-labelledby="faq-title">
+  <div class="container faq__inner">
+    <div class="faq__header reveal">
+      <span class="section-label">Preguntas frecuentes</span>
+      <h2 class="section-title" id="faq-title">Resolvemos dudas antes de tu <em>pedido</em></h2>
+      <p class="section-body faq__intro">Una sección breve para reducir objeciones y acelerar decisiones.</p>
+    </div>
+
+    <div class="faq__list">
+      {faqs.map((item, index) => (
+        <details class="faq__item reveal" style={`transition-delay: ${index * 70}ms;`}>
+          <summary class="faq__question">{item.q}</summary>
+          <p class="faq__answer">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 760px;
+  }
+
+  .faq__inner {
+    max-width: 920px;
+  }
+
+  .faq__header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .faq__intro {
+    margin-inline: auto;
+    margin-top: .9rem;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+  }
+
+  .faq__item {
+    border: 1px solid rgba(214, 51, 132, .12);
+    border-radius: 16px;
+    background: rgba(255,255,255,.92);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  .faq__question {
+    list-style: none;
+    cursor: pointer;
+    padding: 1rem 1.15rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .faq__question::-webkit-details-marker { display: none; }
+
+  .faq__answer {
+    padding: 0 1.15rem 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.75;
+  }
+</style>

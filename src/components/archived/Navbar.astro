@@ -12,6 +12,10 @@ const navLinks = [
     <!-- Brand -->
     <a href="/" class="navbar__brand" aria-label="Pétalos Mary – inicio">
       <img src="/logo.png" alt="Pétalos Mary" class="navbar__logo-img" width="44" height="44" />
+      <span class="navbar__brand-copy">
+        <strong class="navbar__brand-title">Pétalos Mary</strong>
+        <span class="navbar__brand-subtitle">Florería artesanal</span>
+      </span>
     </a>
 
     <!-- Desktop nav -->
@@ -23,7 +27,7 @@ const navLinks = [
 
     <!-- CTA -->
     <a href="#contacto" class="btn btn-primary navbar__cta">
-      Hacer un pedido
+      Pedir por WhatsApp
     </a>
 
     <!-- Mobile hamburger -->
@@ -73,6 +77,25 @@ const navLinks = [
     align-items: center;
     gap: .55rem;
     flex-shrink: 0;
+  }
+
+  .navbar__brand-copy {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+
+  .navbar__brand-title {
+    font-family: var(--font-display);
+    font-size: .98rem;
+    color: var(--color-text);
+  }
+
+  .navbar__brand-subtitle {
+    font-size: .7rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
   }
 
   .navbar__logo-img {
@@ -178,6 +201,11 @@ const navLinks = [
     .navbar__nav,
     .navbar__cta { display: none; }
     .navbar__hamburger { display: flex; }
+  }
+
+  @media (max-width: 520px) {
+    .navbar__brand-subtitle { display: none; }
+    .navbar__brand-title { font-size: .9rem; }
   }
 </style>
 

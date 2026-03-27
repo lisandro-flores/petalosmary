@@ -1,0 +1,193 @@
+---
+import { FALLBACK_GALLERY } from '../lib/fallback';
+import type { GalleryItem } from '../lib/fallback';
+
+interface Props { items?: GalleryItem[]; }
+const { items = FALLBACK_GALLERY } = Astro.props;
+
+// Solo mostrar 6 imágenes para mantener limpio
+const displayItems = items.slice(0, 6);
+---
+
+<section class="gallery" id="galeria" aria-labelledby="gallery-title">
+  <div class="container">
+    <header class="gallery__header">
+      <h2 class="gallery__title" id="gallery-title">Nuestro trabajo</h2>
+      <p class="gallery__subtitle">Cada arreglo es único, hecho con flores frescas y cariño.</p>
+    </header>
+
+    <div class="gallery__grid">
+      {displayItems.map((item, idx) => (
+        <a
+          href={`https://wa.me/5212371113802?text=Hola%2C%20me%20interesa%20un%20arreglo%20como%20${encodeURIComponent(item.alt)}`}
+          class="gallery__item"
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Cotizar: ${item.alt}`}
+        >
+          <img
+            src={item.src}
+            alt={item.alt}
+            loading={idx < 3 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+          <span class="gallery__overlay">
+            <span class="gallery__label">Cotizar</span>
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <div class="gallery__more">
+      <button type="button" class="gallery__link open-gallery-btn" style="background:none; border:none; cursor:pointer; font-family:inherit;">
+        Ver toda la galería
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery {
+    padding: 8rem 0;
+    background: var(--color-surface);
+  }
+
+  .gallery__header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .gallery__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .gallery__subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+    margin: 0;
+  }
+
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    align-items: center; /* Creates slight vertical masonry-ish feel in auto-fit */
+  }
+
+  /* Make middle item slightly larger for an editorial asymmetric look */
+  @media (min-width: 900px) {
+    .gallery__grid {
+      grid-template-columns: 1fr 1.2fr 1fr;
+      align-items: center;
+    }
+  }
+
+  .gallery__item {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    background: var(--color-bg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+
+  .gallery__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .gallery__item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .gallery__item:hover img {
+    transform: scale(1.08);
+  }
+
+  .gallery__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(28,25,26,0.6) 0%, rgba(28,25,26,0) 50%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 2rem;
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .gallery__item:hover .gallery__overlay,
+  .gallery__item:focus-visible .gallery__overlay {
+    opacity: 1;
+  }
+
+  .gallery__item:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  .gallery__label {
+    color: #fff;
+    font-size: 0.9375rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    padding: 0.75rem 1.75rem;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 999px;
+    transform: translateY(20px);
+    transition: transform var(--transition);
+  }
+
+  .gallery__item:hover .gallery__label,
+  .gallery__item:focus-visible .gallery__label {
+    transform: translateY(0);
+  }
+
+  .gallery__more {
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  .gallery__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--transition), transform var(--transition);
+  }
+
+  .gallery__link:hover {
+    color: var(--color-primary);
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 640px) {
+    .gallery {
+      padding: 5rem 0;
+    }
+    .gallery__grid {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 2rem;
+    }
+    .gallery__item {
+      aspect-ratio: 1;
+    }
+  }
+</style>

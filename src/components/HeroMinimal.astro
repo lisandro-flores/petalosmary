@@ -1,0 +1,394 @@
+---
+---
+
+<section class="hero" id="inicio" aria-label="Bienvenida Especial 10 de Mayo">
+  <!-- Fondo decorativo tipo pétalos/pinceladas -->
+  <div class="hero__bg-decor"></div>
+  <div class="hero__bg-decor hero__bg-decor--2"></div>
+
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <div class="hero__badge-wrapper">
+        <span class="hero__badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" style="margin-right:4px; margin-bottom:2px;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          Especial Día de las Madres
+        </span>
+      </div>
+      
+      <h1 class="hero__title">
+        Celebra a mamá con arreglos<br>
+        <em>hechos a mano</em>
+      </h1>
+      
+      <p class="hero__subtitle">
+        Dile cuánto la quieres con flores. Sorpréndela este <strong>10 de Mayo</strong> con un detalle inolvidable. Agenda con tiempo tu entrega en Puebla.
+      </p>
+
+      <div class="hero__actions">
+        <a href="https://wa.me/5212371113802?text=Hola%2C%20quiero%20cotizar%20un%20arreglo%20para%20el%2010%20de%20mayo" class="hero__cta" target="_blank" rel="noreferrer">
+          Agendar pedido
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <div class="countdown" aria-hidden="true">
+          <span class="countdown__text">Faltan</span>
+          <div class="countdown__boxes">
+            <div class="countdown__box"><span id="heroDays">--</span><small>días</small></div>
+            <div class="countdown__box"><span id="heroHours">--</span><small>hrs</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__image">
+      <div class="hero__image-frame">
+        <img
+          src="/images/IMG-20260226-WA0032.jpg"
+          alt="Arreglo floral exclusivo para mamá"
+          width="600"
+          height="750"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <div class="hero__image-badge">
+          Reserva abierta
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 0 6rem;
+    background: linear-gradient(145deg, #fffafa 0%, #ffe4e6 50%, #fdf2f8 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative soft blur blob in background */
+  .hero__bg-decor {
+    content: '';
+    position: absolute;
+    top: -15%;
+    right: -10%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(244, 114, 182, 0.15) 0%, transparent 65%);
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 50%;
+  }
+
+  .hero__bg-decor--2 {
+    top: auto;
+    bottom: -20%;
+    right: auto;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(2fb3b, 114, 182, 0.12) 0%, transparent 60%);
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(3rem, 6vw, 6rem);
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero__content {
+    max-width: 620px;
+    position: relative;
+  }
+
+  .hero__badge-wrapper {
+    margin-bottom: 2rem;
+    animation: fadeDown 0.8s ease-out;
+  }
+
+  .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    color: #be185d;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.25rem;
+    border-radius: 999px;
+    border: 1px solid #fbcfe8;
+    box-shadow: 0 4px 12px rgba(190, 24, 93, 0.1);
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 6vw, 5.2rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #4a044e;
+    margin: 0 0 1.5rem;
+    animation: fadeUp 0.8s ease-out 0.2s both;
+  }
+
+  .hero__title em {
+    font-style: italic;
+    color: #db2777; /* Deeper vibrant pink */
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .hero__title em::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: rgba(252, 165, 165, 0.3);
+    z-index: -1;
+    border-radius: 4px;
+  }
+
+  .hero__subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+    color: #831843;
+    font-weight: 400;
+    line-height: 1.8;
+    margin: 0 0 2.5rem;
+    max-width: 500px;
+    animation: fadeUp 0.8s ease-out 0.4s both;
+  }
+
+  .hero__subtitle strong {
+    color: #be185d;
+    font-weight: 600;
+  }
+
+  .hero__actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s ease-out 0.6s both;
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #be185d;
+    color: #fff;
+    padding: 1.125rem 2.2rem;
+    border-radius: 999px;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    box-shadow: 0 8px 24px rgba(190, 24, 93, 0.25);
+  }
+
+  .hero__cta:hover {
+    transform: translateY(-4px);
+    background: #9d174d;
+    box-shadow: 0 12px 32px rgba(190, 24, 93, 0.35);
+  }
+
+  .hero__cta:focus-visible {
+    outline: 2px solid #db2777;
+    outline-offset: 4px;
+  }
+
+  /* Countdown snippet */
+  .countdown {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 0.6rem 1rem;
+    border-radius: 100px;
+    border: 1px solid rgba(251, 207, 232, 0.8);
+  }
+
+  .countdown__text {
+    font-size: 0.875rem;
+    color: #831843;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .countdown__boxes {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .countdown__box {
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+    background: #fff;
+    color: #be185d;
+    padding: 0.4rem 0.75rem;
+    border-radius: 100px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .countdown__box span {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .countdown__box small {
+    font-size: 0.7rem;
+    opacity: 0.8;
+  }
+
+  .hero__image {
+    position: relative;
+    animation: fadeIn 1.2s ease-out 0.4s both;
+  }
+
+  .hero__image-frame {
+    position: relative;
+    border-radius: 2.5rem;
+    padding: 1rem;
+    background: #fff;
+    box-shadow: 0 20px 40px rgba(190, 24, 93, 0.08);
+    transform: rotate(2deg);
+    transition: transform 0.4s ease;
+  }
+
+  .hero__image-frame:hover {
+    transform: rotate(0deg);
+  }
+
+  .hero__image-badge {
+    position: absolute;
+    bottom: -1rem;
+    left: -1.5rem;
+    background: #fff;
+    color: #be185d;
+    font-weight: 700;
+    font-size: 0.875rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 100px;
+    box-shadow: 0 8px 24px rgba(190, 24, 93, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transform: rotate(-5deg);
+    border: 1px solid #fce7f3;
+  }
+
+  .hero__image img {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    border-radius: 1.75rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding: 9rem 0 5rem;
+    }
+
+    .hero__inner {
+      grid-template-columns: 1fr;
+      gap: 4rem;
+      text-align: center;
+    }
+
+    .hero__content {
+      max-width: 100%;
+      order: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero__actions {
+      justify-content: center;
+    }
+
+    .hero__image {
+      order: 2;
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+      max-width: 420px;
+    }
+
+    .hero__image-badge {
+      left: 50%;
+      transform: translateX(-50%) rotate(0);
+      bottom: -1.5rem;
+    }
+    
+    .countdown {
+      margin-top: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  // Cuenta regresiva básica para 10 de Mayo
+  function getMotherDayTarget(): Date {
+    const now = new Date();
+    let year  = now.getFullYear();
+    const target = new Date(year, 4, 10, 0, 0, 0); // Mes 4 = Mayo (0-indexed)
+    if (now > target) target.setFullYear(year + 1);
+    return target;
+  }
+
+  const daysEl = document.getElementById('heroDays');
+  const hoursEl = document.getElementById('heroHours');
+
+  function updateHeroTimer() {
+    if (!daysEl || !hoursEl) return;
+    
+    const diff = getMotherDayTarget().getTime() - Date.now();
+    
+    if (diff <= 0) {
+      daysEl.textContent = '0';
+      hoursEl.textContent = '0';
+      return;
+    }
+
+    const days  = Math.floor(diff / 86_400_000);
+    const hours = Math.floor((diff % 86_400_000) / 3_600_000);
+
+    daysEl.textContent = String(days).padStart(2, '0');
+    hoursEl.textContent = String(hours).padStart(2, '0');
+  }
+
+  updateHeroTimer();
+  setInterval(updateHeroTimer, 60000); // Actualizar cada minuto
+</script>

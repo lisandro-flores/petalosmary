@@ -1,0 +1,119 @@
+---
+const items = [
+  {
+    title: 'Atención cercana',
+    body: 'Acompañamiento directo por WhatsApp para resolver dudas, cotizar y confirmar cada detalle.',
+    icon: '✿',
+  },
+  {
+    title: 'Diseños a medida',
+    body: 'Ramos, arreglos y detalles florales pensados para la ocasión, el presupuesto y el estilo de cada cliente.',
+    icon: '✦',
+  },
+  {
+    title: 'Entrega local',
+    body: 'Coordinación práctica para entregas en San José Buenavista, Puebla y zonas cercanas.',
+    icon: '❀',
+  },
+  {
+    title: 'Fechas especiales',
+    body: 'Bodas, cumpleaños, aniversarios y campañas de temporada con una presentación más cuidada.',
+    icon: '✺',
+  },
+];
+---
+
+<section class="value-props section" aria-labelledby="value-props-title">
+  <div class="container">
+    <div class="value-props__header reveal">
+      <span class="section-label">Por qué elegirnos</span>
+      <h2 class="section-title" id="value-props-title">Más claridad, más confianza, más <em>intención</em></h2>
+      <p class="section-body value-props__intro">
+        La experiencia de compra ahora se entiende mejor: qué hace diferente a Pétalos Mary y por qué pedir aquí.
+      </p>
+    </div>
+
+    <div class="value-props__grid">
+      {items.map((item, index) => (
+        <article class="value-props__card reveal" style={`transition-delay: ${index * 100}ms;`}>
+          <span class="value-props__icon" aria-hidden="true">{item.icon}</span>
+          <h3 class="value-props__title">{item.title}</h3>
+          <p class="value-props__body">{item.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .value-props {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+
+  .value-props__header {
+    text-align: center;
+    margin-bottom: 2.25rem;
+  }
+
+  .value-props__intro {
+    margin-inline: auto;
+    margin-top: .9rem;
+  }
+
+  .value-props__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .value-props__card {
+    background: rgba(255,255,255,.85);
+    border: 1px solid rgba(214, 51, 132, .1);
+    border-radius: 24px;
+    padding: 1.4rem;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(8px);
+  }
+
+  .value-props__icon {
+    width: 2.6rem;
+    height: 2.6rem;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--color-accent) 0%, #fff 100%);
+    color: var(--color-primary);
+    font-size: 1.15rem;
+    margin-bottom: .95rem;
+  }
+
+  .value-props__title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: .55rem;
+    color: var(--color-text);
+  }
+
+  .value-props__body {
+    font-size: .92rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 900px) {
+    .value-props__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .value-props {
+      padding-top: 0;
+    }
+
+    .value-props__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

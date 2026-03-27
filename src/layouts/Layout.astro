@@ -6,7 +6,7 @@ export interface Props {
 
 const {
   title = 'Pétalos Mary — Florería artesanal',
-  description = 'Arreglos florales únicos para cada momento especial. Bodas, eventos, regalos y más.',
+  description = 'Arreglos florales artesanales para fechas especiales en San José Buenavista, Puebla. Atención por WhatsApp y diseños personalizados.',
 } = Astro.props;
 ---
 
@@ -22,6 +22,7 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
     <meta property="og:url" content="https://petalosmary.com" />
     <meta property="og:image" content="https://petalosmary.com/images/IMG-20241122-WA0002.jpg" />
     <meta property="og:image:width" content="1200" />
@@ -33,7 +34,7 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
 
@@ -86,26 +87,40 @@ const {
 
   /* ── Custom properties ── */
   :root {
-    --color-primary:     #d63384; /* Mas vivo */
-    --color-primary-dark:#b82b70;
-    --color-accent:      #fff0f6;
-    --color-accent-dark: #ffdeeb;
-    --color-bg:          #fffafb;
-    --color-surface:     #ffffff;
-    --color-text:        #212529;
-    --color-text-muted:  #495057;
-    --color-border:      #f8d7da;
-    --font-display:      'Playfair Display', Georgia, serif;
-    --font-body:         'Inter', system-ui, sans-serif;
+    /* Premium Color Palette */
+    --color-primary:     #ac1c54;     /* Deep rich cherry/wine */
+    --color-primary-dark:#8a1441;
+    --color-accent:      #fdfbfb;     /* Very soft, clean off-white */
+    --color-accent-dark: #f0e6ea;     /* Soft blush for borders/accents */
+    --color-bg:          #faf9f8;     /* Editorial cream/off-white background */
+    --color-surface:     #ffffff;     /* Pure white for cards */
+    
+    /* Typography */
+    --color-text:        #1c191a;     /* Off-black for better readability and elegance */
+    --color-text-muted:  #6b6366;     /* Warmer muted grey */
+    --color-border:      #efe8eb;
+
+    /* Google Fonts: 'Cormorant Garamond' + 'Outfit' */
+    --font-display:      'Cormorant Garamond', Georgia, serif;
+    --font-body:         'Outfit', system-ui, sans-serif;
+
+    /* Spacing & Borders */
     --radius-sm:         8px;
     --radius-md:         16px;
-    --radius-lg:         32px;
-    --shadow-sm:         0 2px 8px rgba(214,51,132,.08);
-    --shadow-md:         0 8px 32px rgba(214,51,132,.12);
-    --shadow-lg:         0 24px 72px rgba(214,51,132,.18);
-    --transition:        350ms cubic-bezier(.4, 0, .2, 1);
-    --max-w:             1200px;
-    --section-py:        6rem;
+    --radius-lg:         24px;        /* Slightly reduced for sophistication */
+    --radius-xl:         32px;
+    
+    /* Premium Shadows & Glassmorphism */
+    --shadow-sm:         0 4px 12px rgba(28, 25, 26, 0.03);
+    --shadow-md:         0 12px 32px rgba(28, 25, 26, 0.06);
+    --shadow-lg:         0 24px 64px rgba(28, 25, 26, 0.08);
+    --glass-bg:          rgba(255, 255, 255, 0.75);
+    --glass-border:      1px solid rgba(255, 255, 255, 0.4);
+    
+    /* Transitions & Layout */
+    --transition:        400ms cubic-bezier(0.22, 1, 0.36, 1); /* Smoother, "apple-like" curve */
+    --max-w:             1280px;      /* Slightly wider for editorial feel */
+    --section-py:        8rem;        /* More breathing room */
   }
 
   @keyframes fadeIn {
@@ -141,6 +156,11 @@ const {
 
   img { display: block; max-width: 100%; }
   a   { color: inherit; text-decoration: none; }
+
+  :focus-visible {
+    outline: 3px solid rgba(214, 51, 132, .35);
+    outline-offset: 3px;
+  }
 
   /* ── Utility ── */
   .container {
@@ -241,4 +261,20 @@ const {
     border: 3px solid var(--color-bg);
   }
   ::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    .reveal,
+    .reveal.active {
+      opacity: 1;
+      transform: none;
+    }
+  }
 </style>

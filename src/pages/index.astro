@@ -1,27 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Hero from '../components/Hero.astro';
-import SpringYellow from '../components/SpringYellow.astro';
-import Gallery from '../components/Gallery.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
-import { FALLBACK_GALLERY, FALLBACK_SPRING } from '../lib/fallback';
-
-const galleryItems = FALLBACK_GALLERY;
-const springPhotos = FALLBACK_SPRING;
+import NavbarMinimal from '../components/NavbarMinimal.astro';
+import HeroMinimal from '../components/HeroMinimal.astro';
+import GalleryMinimal from '../components/GalleryMinimal.astro';
+import ProcessMinimal from '../components/ProcessMinimal.astro';
+import ContactMinimal from '../components/ContactMinimal.astro';
+import FooterMinimal from '../components/FooterMinimal.astro';
+import FullGallery from '../components/FullGallery.astro';
+import SeasonalBanner from '../components/SeasonalBanner.astro';
 ---
 
 <Layout
-  title="Pétalos Mary — Florería artesanal en Ciudad de México"
-  description="Arreglos florales únicos para bodas, eventos, cumpleaños y más. Flores frescas con entrega a domicilio en CDMX. Diseños artesanales desde 2010."
+  title="Pétalos Mary — Florista artesanal en Puebla"
+  description="Arreglos florales personalizados para cada ocasión. Entrega local en Puebla."
 >
-  <Navbar />
+  <SeasonalBanner />
+  <NavbarMinimal />
   <main>
-    <SpringYellow amarillas={springPhotos} />
-    <Hero />
-    <Gallery items={galleryItems} />
-    <Contact />
+    <HeroMinimal />
+    <GalleryMinimal />
+    <ProcessMinimal />
+    <ContactMinimal />
   </main>
-  <Footer />
+  <FooterMinimal />
+  
+  <FullGallery />
 </Layout>

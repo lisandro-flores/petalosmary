@@ -1,0 +1,97 @@
+---
+---
+
+<header class="navbar" id="navbar">
+  <div class="container navbar__inner">
+    <a href="#inicio" class="navbar__brand">Pétalos Mary</a>
+    
+    <nav class="navbar__nav" aria-label="Navegación principal">
+      <a href="#galeria" class="navbar__link">Galería</a>
+      <a 
+        href="https://wa.me/5212371113802?text=Hola%2C%20quiero%20cotizar%20un%20arreglo%20floral" 
+        class="navbar__cta"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Contactar
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.25rem 0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: var(--glass-border);
+    transition: padding var(--transition), background var(--transition);
+  }
+
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar__brand {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .navbar__nav {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .navbar__link {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .navbar__link:hover {
+    color: var(--color-primary);
+  }
+
+  .navbar__cta {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--color-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .navbar__cta:hover {
+    transform: translateY(-2px);
+    background: var(--color-primary-dark);
+    box-shadow: 0 8px 20px rgba(172, 28, 84, 0.25);
+  }
+
+  @media (max-width: 480px) {
+    .navbar__nav {
+      gap: 1rem;
+    }
+    
+    .navbar__link {
+      display: none;
+    }
+  }
+</style>

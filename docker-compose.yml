@@ -16,8 +16,12 @@ services:
       - ./public/images:/app/dist/client/images
     networks:
       - proxy-net
+      - ngicode-net
     restart: unless-stopped
 
 networks:
   proxy-net:
     external: true
+  ngicode-net:
+    external: true
+    name: mi-web_web-net

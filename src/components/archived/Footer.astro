@@ -16,7 +16,9 @@ const links = [
         <img src="/logo.png" alt="Pétalos Mary" class="footer__logo-img" width="48" height="48" loading="lazy" />
         <span class="footer__logo-name">Pétalos <strong>Mary</strong></span>
       </a>
-    
+      <p class="footer__tagline">
+        Florería artesanal para fechas especiales, con atención directa y una presencia visual más consistente.
+      </p>
     </div>
 
     <!-- Nav -->
@@ -39,14 +41,25 @@ const links = [
       </ul>
     </div>
 
-   
+    <div class="footer__contact">
+      <p class="footer__nav-title">Contacto</p>
+      <ul class="footer__nav-list">
+        <li><a href="https://wa.me/5212371113802" class="footer__nav-link" target="_blank" rel="noreferrer">WhatsApp</a></li>
+        <li><a href="mailto:hola@petalosmary.com" class="footer__nav-link">hola@petalosmary.com</a></li>
+        <li><span class="footer__nav-link">Sin local físico, trabajamos por pedido</span></li>
+        <li><span class="footer__nav-link">Lun–Sáb · 9:00 a 19:00</span></li>
+      </ul>
+    </div>
+
+  </div>
+
   <!-- Bottom bar -->
   <div class="footer__bar">
     <div class="container footer__bar-inner">
       <p>© {year} Pétalos Mary · Todos los derechos reservados</p>
       <p>Hecho con <span aria-label="amor" style="color:#e53e3e;display:inline-flex;align-items:center;vertical-align:middle">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="#e53e3e" stroke="#e53e3e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </span> en San Jose Buenavista</p>
+      </span> desde Puebla</p>
     </div>
   </div>
 </footer>
@@ -119,42 +132,6 @@ const links = [
   }
 
   .footer__nav-link:hover { color: #fff; }
-
-  /* Newsletter */
-  .footer__newsletter-body {
-    font-size: .875rem;
-    line-height: 1.55;
-    margin-bottom: 1.25rem;
-  }
-
-  .footer__form {
-    display: flex;
-    gap: .5rem;
-    flex-wrap: wrap;
-  }
-
-  .footer__email {
-    flex: 1;
-    min-width: 0;
-    padding: .7rem 1rem;
-    border: 1.5px solid rgba(255,255,255,.18);
-    border-radius: var(--radius-lg);
-    background: rgba(255,255,255,.08);
-    color: #fff;
-    font-size: .875rem;
-    font-family: var(--font-body);
-    outline: none;
-    transition: border-color var(--transition);
-  }
-
-  .footer__email::placeholder { color: rgba(255,255,255,.4); }
-  .footer__email:focus { border-color: var(--color-accent-dark); }
-
-  .footer__submit {
-    font-size: .875rem;
-    padding: .7rem 1.25rem;
-    white-space: nowrap;
-  }
 
   /* Bottom bar */
   .footer__bar { padding-block: 1.25rem; }

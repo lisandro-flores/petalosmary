@@ -28,7 +28,7 @@ const meanings = [
         <span class="spring__date-icon" aria-hidden="true">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b07d00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.1L21 9.3l-4.5 3.4L17 21l-5-2.6L7 21l.5-8.3L3 9.3l6.1-1.2L12 2z"/></svg>
         </span>
-        21 de Marzo · Día de las Flores Amarillas
+        10 de Mayo · Día de las Madres
       </span>
     </div>
 
@@ -36,20 +36,20 @@ const meanings = [
     <div class="spring__header reveal">
       <span class="section-label" style="color:#b07d00">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.9 6.1L21 9.3l-4.5 3.4L17 21l-5-2.6L7 21l.5-8.3L3 9.3l6.1-1.2L12 2z"/></svg>
-        Tradición de primavera
+        Temporada especial
       </span>
       <h2 class="section-title spring__title" id="spring-title">
-        El 21 de marzo, regala<br><em class="spring__em">flores amarillas</em>
+        Este 10 de mayo, regala<br><em class="spring__em">flores amarillas</em>
       </h2>
       <p class="section-body spring__intro">
-        Cada año, con el inicio de la primavera en el hemisferio norte, las flores
-        amarillas simbolizan <strong>alegría, amor, amistad y nuevos comienzos</strong>.
+        Para celebrar a mamá, las flores amarillas simbolizan
+        <strong>amor, gratitud, alegría y nuevos comienzos</strong>.
         Haz que alguien especial lo reciba de Pétalos Mary.
       </p>
     </div>
 
     <!-- Countdown -->
-    <div class="spring__countdown" aria-live="polite" aria-label="Cuenta regresiva al 21 de marzo">
+    <div class="spring__countdown" aria-live="polite" aria-label="Cuenta regresiva al 10 de mayo">
       <div class="spring__countdown-label">Faltan</div>
       <div class="spring__countdown-units">
         <div class="spring__unit">
@@ -72,7 +72,7 @@ const meanings = [
           <span class="spring__unit-label">segundos</span>
         </div>
       </div>
-      <div class="spring__countdown-label">para el inicio de la primavera</div>
+      <div class="spring__countdown-label">para el Día de las Madres</div>
     </div>
 
     <!-- Meanings -->
@@ -116,7 +116,7 @@ const meanings = [
     <!-- CTA -->
     <div class="spring__cta">
       <p class="spring__cta-text">
-        ¡Reserva tu arreglo de flores amarillas para el <strong>21 de marzo</strong> antes de que se agoten!
+        ¡Reserva tu arreglo de flores amarillas para el <strong>10 de mayo</strong> antes de que se agoten!
       </p>
       <a href="#contacto" class="btn spring__btn" id="springCta">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.9 6.1L21 9.3l-4.5 3.4L17 21l-5-2.6L7 21l.5-8.3L3 9.3l6.1-1.2L12 2z"/></svg>
@@ -449,11 +449,11 @@ const meanings = [
 </style>
 
 <script>
-  // ── Countdown to March 21 ──
+  // ── Countdown to May 10 ──
   function getTarget(): Date {
     const now = new Date();
     let year  = now.getFullYear();
-    const target = new Date(year, 2, 21, 0, 0, 0); // March = 2 (0-indexed)
+    const target = new Date(year, 4, 10, 0, 0, 0); // May = 4 (0-indexed)
     if (now >= target) target.setFullYear(year + 1);
     return target;
   }
@@ -475,7 +475,7 @@ const meanings = [
       hoursEl.textContent = '00';
       minsEl.textContent  = '00';
       secsEl.textContent  = '00';
-      urgency.textContent = '🌼 ¡Hoy es el Día de las Flores Amarillas!';
+      urgency.textContent = '💐 ¡Hoy es el Día de las Madres!';
       return;
     }
 
