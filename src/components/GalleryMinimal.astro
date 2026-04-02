@@ -11,9 +11,10 @@ const displayItems = items.slice(0, 6);
 
 <section class="gallery" id="galeria" aria-labelledby="gallery-title">
   <div class="container">
-    <header class="gallery__header">
-      <h2 class="gallery__title" id="gallery-title">Nuestro trabajo</h2>
-      <p class="gallery__subtitle">Cada arreglo es único, hecho con flores frescas y cariño.</p>
+    <header class="gallery__header reveal">
+      <span class="section-label">Nuestro trabajo</span>
+      <h2 class="section-title gallery__title" id="gallery-title">Cada arreglo, <em>una historia</em></h2>
+      <p class="section-body gallery__subtitle">Flores frescas, diseños únicos y mucho cariño en cada pedido.</p>
     </header>
 
     <div class="gallery__grid">
@@ -75,19 +76,12 @@ const displayItems = items.slice(0, 6);
   }
 
   .gallery__title {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    font-weight: 600;
-    color: var(--color-text);
     margin: 0 0 1rem;
-    letter-spacing: -0.02em;
   }
 
   .gallery__subtitle {
-    font-size: 1.125rem;
-    color: var(--color-text-muted);
-    font-weight: 300;
-    margin: 0;
+    margin-inline: auto;
+    text-align: center;
   }
 
   .gallery__grid {
@@ -236,6 +230,9 @@ const displayItems = items.slice(0, 6);
     border-radius: 2rem;
     max-width: 500px;
     width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     animation: modalSlideUp 0.3s ease-out;
@@ -276,15 +273,18 @@ const displayItems = items.slice(0, 6);
 
   .gallery-modal__image {
     width: 100%;
+    max-height: 50vh;
     height: auto;
-    aspect-ratio: 4/5;
     object-fit: cover;
     display: block;
+    flex-shrink: 0;
   }
 
   .gallery-modal__footer {
     padding: 2rem;
     text-align: center;
+    overflow-y: auto;
+    flex-grow: 1;
   }
 
   .gallery-modal__alt {
