@@ -1,41 +1,80 @@
 ---
 // Muestra un mensaje breve según la época del año para destacar promociones puntuales.
-// El contenido está duro por simplicidad, se puede convertir a CMS o variables más adelante.
-
 const now = new Date();
 const month = now.getMonth() + 1; // 1-12
 const day   = now.getDate();
 
 let message = '';
+let emoji = '🌸';
 
-// Día de las Madres (10 de mayo)
+// Día de las Madres (10 de mayo) — mostrar desde marzo 22 hasta mayo 10
 if ((month === 3 && day >= 22) || month === 4 || (month === 5 && day <= 10)) {
-  message = 'El próximo festivo es el 10 de mayo: agenda tu arreglo para el Día de las Madres con entrega especial en Puebla.';
+  message = '🌷 Día de las Madres: Agenda tu arreglo especial con entrega el 10 de mayo';
+  emoji = '💐';
 }
 
-// San Valentín (14 febrero)
-if (month === 2 && day >= 7 && day <= 15) {
-  message = 'San Valentín: ramos para enamorar, pide con anticipación.';
+// San Valentín (14 febrero) — mostrar desde enero 25 hasta febrero 14
+if ((month === 1 && day >= 25) || (month === 2 && day <= 14)) {
+  message = '💕 San Valentín: Sorprende con un arreglo floral único. Pide con anticipación';
+  emoji = '🌹';
 }
 
+// Día del Padre (tercer domingo de junio) — mostrar primeras 3 semanas de junio
+if (month === 6 && day <= 21) {
+  message = '🎁 Día del Padre: Detalles florales para papá con entrega especial';
+  emoji = '🌻';
+}
+
+// Graduaciones (junio-julio)
+if ((month === 6 && day > 21) || month === 7) {
+  message = '🎓 Temporada de graduaciones: Ramos y arreglos para celebrar este logro';
+  emoji = '💐';
+}
+
+// Día de muertos (1-2 noviembre) — mostrar desde octubre 20
+if ((month === 10 && day >= 20) || (month === 11 && day <= 2)) {
+  message = '🌼 Día de Muertos: Arreglos con cempasúchil y flores de temporada';
+  emoji = '🌼';
+}
+
+// Navidad y Año Nuevo (diciembre)
+if (month === 12) {
+  message = '🎄 Navidad: Arreglos navideños y centros de mesa para tu celebración';
+  emoji = '🎄';
+}
 ---
 
 {message && (
   <div class="seasonal-banner" id="seasonalBanner" aria-live="polite">
-    {message}
+    <div class="seasonal-banner__content">
+      <span class="seasonal-banner__text">{message}</span>
+      <a 
+        href="https://wa.me/5212371113802?text=Hola%2C%20vi%20la%20promoción%20de%20temporada%20y%20quiero%20cotizar" 
+        class="seasonal-banner__cta"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Cotizar →
+      </a>
+    </div>
+    <button class="seasonal-banner__close" id="closeBanner" aria-label="Cerrar banner">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
   </div>
 )}
 
 <script>
   const banner = document.getElementById('seasonalBanner');
-  if (banner) {
-    setTimeout(() => {
+  const closeBtn = document.getElementById('closeBanner');
+  
+  if (closeBtn && banner) {
+    closeBtn.addEventListener('click', () => {
+      banner.style.transform = 'translateY(-100%)';
       banner.style.opacity = '0';
-      banner.style.visibility = 'hidden';
       setTimeout(() => {
         banner.style.display = 'none';
-      }, 500); // Esperar a que termine la transición de opacidad
-    }, 5000);
+      }, 400);
+    });
   }
 </script>
 
@@ -45,22 +84,79 @@ if (month === 2 && day >= 7 && day <= 15) {
     top: 0;
     left: 0;
     right: 0;
-    background: var(--color-primary);
+    background: linear-gradient(90deg, #4a044e, #7c1d5f, #be185d);
     color: #fff;
     font-size: 0.8125rem;
     font-weight: 500;
     line-height: 1.4;
     text-align: center;
-    padding: 0.55rem 3rem;
+    padding: 0.5rem 2.5rem;
     z-index: 200;
-    box-shadow: 0 2px 8px rgba(0,0,0,.18);
-    letter-spacing: 0.01em;
-    animation: bannerPulse 3s infinite ease-in-out;
-    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: transform 0.4s ease, opacity 0.4s ease;
   }
 
-  @keyframes bannerPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+  .seasonal-banner__content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .seasonal-banner__text {
+    letter-spacing: 0.01em;
+  }
+
+  .seasonal-banner__cta {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 0.25rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .seasonal-banner__cta:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .seasonal-banner__close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+    position: absolute;
+    right: 0.75rem;
+  }
+
+  .seasonal-banner__close:hover {
+    color: #fff;
+  }
+
+  @media (max-width: 480px) {
+    .seasonal-banner {
+      padding: 0.5rem 2rem 0.5rem 1rem;
+      font-size: 0.75rem;
+    }
+
+    .seasonal-banner__cta {
+      display: none;
+    }
   }
 </style>

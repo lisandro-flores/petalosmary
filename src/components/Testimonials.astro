@@ -4,21 +4,24 @@ const reviews = [
     quote: 'Pedí un ramo para el cumpleaños de mi mamá y llegó con una presentación preciosa. La atención fue rápida y muy amable, desde el primer mensaje por WhatsApp.',
     author: 'Daniela R.',
     meta: 'Pedido de cumpleaños',
+    initials: 'DR',
   },
   {
     quote: 'Nos ayudaron con centros de mesa para la boda de mi hermana. Todo se vio delicado, bien combinado y los arreglos llegaron frescos y a tiempo.',
     author: 'María de los Ángeles P.',
     meta: 'Decoración de boda',
+    initials: 'MP',
   },
   {
     quote: 'Me gustó que entendieron exactamente el estilo que quería. Fue fácil cotizar todo por WhatsApp, sin complicaciones. El resultado fue mejor de lo que esperaba.',
     author: 'Carlos M.',
     meta: 'Arreglo personalizado',
+    initials: 'CM',
   },
 ];
 ---
 
-<section class="testimonials section" aria-labelledby="testimonials-title">
+<section class="testimonials section" id="testimonios" aria-labelledby="testimonials-title">
   <div class="container">
     <div class="testimonials__header reveal">
       <span class="section-label">Clientes felices</span>
@@ -31,11 +34,20 @@ const reviews = [
     <div class="testimonials__grid">
       {reviews.map((review, index) => (
         <article class="testimonials__card reveal" style={`transition-delay: ${index * 120}ms;`}>
-          <div class="testimonials__stars" aria-hidden="true">★★★★★</div>
-          <p class="testimonials__quote">“{review.quote}”</p>
+          <div class="testimonials__stars" aria-label="5 estrellas">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="testimonials__quote">"{review.quote}"</p>
           <div class="testimonials__author-block">
-            <strong class="testimonials__author">{review.author}</strong>
-            <span class="testimonials__meta">{review.meta}</span>
+            <div class="testimonials__avatar" aria-hidden="true">{review.initials}</div>
+            <div class="testimonials__author-info">
+              <strong class="testimonials__author">{review.author}</strong>
+              <span class="testimonials__meta">{review.meta}</span>
+            </div>
           </div>
         </article>
       ))}
@@ -51,7 +63,7 @@ const reviews = [
 
   .testimonials__header {
     text-align: center;
-    margin-bottom: 2.25rem;
+    margin-bottom: 3rem;
   }
 
   .testimonials__intro {
@@ -62,48 +74,84 @@ const reviews = [
   .testimonials__grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 1.25rem;
   }
 
   .testimonials__card {
-    padding: 1.5rem;
-    border-radius: 24px;
-    background: linear-gradient(180deg, rgba(255,255,255,.98) 0%, rgba(255,240,246,.72) 100%);
-    border: 1px solid rgba(214, 51, 132, .1);
-    box-shadow: var(--shadow-sm);
+    padding: 2rem 1.75rem;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid rgba(239, 232, 235, 0.8);
+    box-shadow: 0 4px 12px rgba(28, 25, 26, 0.03);
+    transition: transform var(--transition), box-shadow var(--transition);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonials__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(172, 28, 84, 0.06);
   }
 
   .testimonials__stars {
-    color: #f59e0b;
-    letter-spacing: .2em;
-    font-size: .9rem;
-    margin-bottom: .9rem;
+    display: flex;
+    gap: 0.15rem;
+    margin-bottom: 1.1rem;
   }
 
   .testimonials__quote {
     color: var(--color-text);
     line-height: 1.8;
-    margin-bottom: 1.1rem;
+    margin-bottom: 1.5rem;
+    flex: 1;
+    font-size: 0.95rem;
+    font-style: italic;
   }
 
   .testimonials__author-block {
     display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(239, 232, 235, 0.8);
+  }
+
+  .testimonials__avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .testimonials__author-info {
+    display: flex;
     flex-direction: column;
-    gap: .18rem;
+    gap: 0.15rem;
   }
 
   .testimonials__author {
-    font-size: .95rem;
+    font-size: .9rem;
+    color: var(--color-text);
   }
 
   .testimonials__meta {
     color: var(--color-text-muted);
-    font-size: .82rem;
+    font-size: .8rem;
   }
 
   @media (max-width: 900px) {
     .testimonials__grid {
       grid-template-columns: 1fr;
+      max-width: 480px;
+      margin-inline: auto;
     }
   }
 </style>

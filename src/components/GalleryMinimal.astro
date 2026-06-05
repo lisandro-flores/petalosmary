@@ -99,15 +99,16 @@ const displayItems = items.slice(0, 6);
     }
   }
 
-  /* Móvil: 3 columnas */
+  /* Móvil: 2 columnas (mejor legibilidad) */
   @media (max-width: 640px) {
     .gallery__grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
     }
 
     .gallery__item {
-      aspect-ratio: 1;
+      aspect-ratio: 3/4;
+      border-radius: 1rem;
     }
   }
 
