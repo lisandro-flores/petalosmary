@@ -6,12 +6,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "start": "node dist/server/entry.mjs",
-    "start:prod": "HOST=0.0.0.0 PORT=4321 node dist/server/entry.mjs",
+    "start": "astro dev",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^9.5.4",
     "@astrojs/sitemap": "^3.7.0",
     "astro": "^5.18.0"
   },
