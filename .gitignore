@@ -22,6 +22,7 @@ Thumbs.db
 
 # Astro
 .astro/
+.vercel/
 
 # Playwright
 /test-results/

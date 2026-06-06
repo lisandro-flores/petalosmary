@@ -40,6 +40,16 @@ const {
 
     <title>{title}</title>
 
+    <!-- Google Analytics -->
+    <!-- Reemplaza G-XXXXXXXXXX con tu Measurement ID de Google Analytics 4 para Pétalos Mary -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
     <!-- Schema.org LocalBusiness -->
     <script type="application/ld+json" is:inline>{
       "@context": "https://schema.org",

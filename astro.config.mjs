@@ -1,15 +1,18 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 
-const isNetlify = process.env.NETLIFY === 'true';
+const isVercel = process.env.VERCEL === '1' || process.env.VERCEL === 'true';
 
 export default defineConfig({
   site: 'https://petalosmary.ngicode.com',
-  output: isNetlify ? 'static' : 'server',
-  adapter: isNetlify ? undefined : node({
-    mode: 'standalone'
-  }),
+  output: 'server',
+  adapter: isVercel
+    ? vercel()
+    : node({
+        mode: 'standalone'
+      }),
   integrations: [sitemap()],
 });
 
