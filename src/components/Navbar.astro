@@ -1,10 +1,12 @@
 ---
+import { Image } from 'astro:assets';
+import logoImg from '../assets/logo.png';
 ---
 
 <header class="navbar" id="navbar">
   <div class="container navbar__inner">
     <a href="#inicio" class="navbar__brand">
-      <img src="/logo.png" alt="Pétalos Mary Logo" class="navbar__logo" />
+      <Image src={logoImg} alt="Pétalos Mary Logo" class="navbar__logo" />
     </a>
     
     <nav class="navbar__nav" id="navMenu" aria-label="Navegación principal">
