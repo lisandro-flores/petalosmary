@@ -9,7 +9,9 @@ export default defineConfig({
   site: 'https://petalosmary.ngicode.com',
   output: 'server',
   adapter: isVercel
-    ? vercel()
+    ? vercel({
+        imageService: true,
+      })
     : node({
         mode: 'standalone'
       }),
