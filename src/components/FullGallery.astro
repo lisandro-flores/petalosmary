@@ -57,7 +57,9 @@ const optimizedImages = await Promise.all(
 <div id="fullgallery-detail-modal" class="detail-modal" style="display: none;">
   <div class="detail-modal__overlay" data-detail-overlay></div>
   <div class="detail-modal__content">
-    <button type="button" class="detail-modal__close" data-detail-close>✕</button>
+    <button type="button" class="detail-modal__close" data-detail-close>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
     <div class="gallery-modal__img-container">
       <div id="fullgallery-loader" class="gallery-modal__loader">Cargando...</div>
       <img id="detail-modal-img" src="" alt="" class="detail-modal__image" style="opacity: 0;" />

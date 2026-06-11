@@ -29,7 +29,8 @@ const optimizedItems = await Promise.all(
       {optimizedItems.map((item, idx) => (
         <button
           type="button"
-          class="gallery__item"
+          class="gallery__item reveal"
+          style={`transition-delay: ${idx * 100}ms;`}
           data-src={item.optimizedSrc}
           data-alt={item.alt}
           aria-label={`Ver: ${item.alt}`}
@@ -61,7 +62,9 @@ const optimizedItems = await Promise.all(
   <div id="gallery-modal" class="gallery-modal" style="display: none;">
     <div class="gallery-modal__overlay" data-gallery-overlay></div>
     <div class="gallery-modal__content">
-      <button type="button" class="gallery-modal__close" data-gallery-close>✕</button>
+      <button type="button" class="gallery-modal__close" data-gallery-close>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
       <div class="gallery-modal__img-container">
         <div id="gallery-modal-loader" class="gallery-modal__loader">Cargando...</div>
         <img id="gallery-modal-img" src="" alt="" class="gallery-modal__image" style="opacity: 0;" />

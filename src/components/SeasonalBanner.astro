@@ -5,48 +5,43 @@ const month = now.getMonth() + 1; // 1-12
 const day   = now.getDate();
 
 let message = '';
-let emoji = '🌸';
+const icon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`;
 
 // Día de las Madres (10 de mayo) — mostrar desde marzo 22 hasta mayo 10
 if ((month === 3 && day >= 22) || month === 4 || (month === 5 && day <= 10)) {
-  message = '🌷 Día de las Madres: Agenda tu arreglo especial con entrega el 10 de mayo';
-  emoji = '💐';
+  message = 'Día de las Madres: Agenda tu arreglo especial con entrega el 10 de mayo';
 }
 
 // San Valentín (14 febrero) — mostrar desde enero 25 hasta febrero 14
 if ((month === 1 && day >= 25) || (month === 2 && day <= 14)) {
-  message = '💕 San Valentín: Sorprende con un arreglo floral único. Pide con anticipación';
-  emoji = '🌹';
+  message = 'San Valentín: Sorprende con un arreglo floral único. Pide con anticipación';
 }
 
 // Día del Padre (tercer domingo de junio) — mostrar primeras 3 semanas de junio
 if (month === 6 && day <= 21) {
-  message = '🎁 Preventa Día del Padre: ¡Reserva su arreglo hoy y sorprende a papá!';
-  emoji = '🌻';
+  message = 'Preventa Día del Padre: ¡Reserva su arreglo hoy y sorprende a papá!';
 }
 
 // Graduaciones (junio-julio)
 if ((month === 6 && day > 21) || month === 7) {
-  message = '🎓 Temporada de graduaciones: Ramos y arreglos para celebrar este logro';
-  emoji = '💐';
+  message = 'Temporada de graduaciones: Ramos y arreglos para celebrar este logro';
 }
 
 // Día de muertos (1-2 noviembre) — mostrar desde octubre 20
 if ((month === 10 && day >= 20) || (month === 11 && day <= 2)) {
-  message = '🌼 Día de Muertos: Arreglos con cempasúchil y flores de temporada';
-  emoji = '🌼';
+  message = 'Día de Muertos: Arreglos con cempasúchil y flores de temporada';
 }
 
 // Navidad y Año Nuevo (diciembre)
 if (month === 12) {
-  message = '🎄 Navidad: Arreglos navideños y centros de mesa para tu celebración';
-  emoji = '🎄';
+  message = 'Navidad: Arreglos navideños y centros de mesa para tu celebración';
 }
 ---
 
 {message && (
   <div class="seasonal-banner" id="seasonalBanner" aria-live="polite">
     <div class="seasonal-banner__content">
+      <span class="seasonal-banner__icon" set:html={icon} />
       <span class="seasonal-banner__text">{message}</span>
       <a 
         href="https://wa.me/5212371113802?text=Hola%2C%20vi%20la%20promoción%20de%20temporada%20y%20quiero%20cotizar" 
@@ -67,14 +62,18 @@ if (month === 12) {
   const banner = document.getElementById('seasonalBanner');
   const closeBtn = document.getElementById('closeBanner');
   
+  function hideBanner() {
+    if (!banner) return;
+    banner.style.transform = 'translateY(-100%)';
+    banner.style.opacity = '0';
+    setTimeout(() => {
+      banner.style.display = 'none';
+    }, 400);
+  }
+
   if (closeBtn && banner) {
-    closeBtn.addEventListener('click', () => {
-      banner.style.transform = 'translateY(-100%)';
-      banner.style.opacity = '0';
-      setTimeout(() => {
-        banner.style.display = 'none';
-      }, 400);
-    });
+    closeBtn.addEventListener('click', hideBanner);
+    setTimeout(hideBanner, 5000); // Se oculta automáticamente después de 5 segundos
   }
 </script>
 
