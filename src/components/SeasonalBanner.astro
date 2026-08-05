@@ -1,161 +1,141 @@
 ---
-// Muestra un mensaje breve según la época del año para destacar promociones puntuales.
+// Mensaje breve según la época del año para destacar promociones puntuales.
 const now = new Date();
 const month = now.getMonth() + 1; // 1-12
-const day   = now.getDate();
+const day = now.getDate();
 
 let message = '';
-const icon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`;
 
-// Día de las Madres (10 de mayo) — mostrar desde marzo 22 hasta mayo 10
-if ((month === 3 && day >= 22) || month === 4 || (month === 5 && day <= 10)) {
-  message = 'Día de las Madres: Agenda tu arreglo especial con entrega el 10 de mayo';
-}
-
-// San Valentín (14 febrero) — mostrar desde enero 25 hasta febrero 14
+// San Valentín (14 feb) — desde el 25 de enero
 if ((month === 1 && day >= 25) || (month === 2 && day <= 14)) {
-  message = 'San Valentín: Sorprende con un arreglo floral único. Pide con anticipación';
+  message = 'San Valentín: aparta tu ramo con anticipación, los cupos del 14 se llenan rápido.';
 }
 
-// Día del Padre (tercer domingo de junio) — mostrar primeras 3 semanas de junio
+// Día de las Madres (10 mayo) — desde el 22 de marzo
+if ((month === 3 && day >= 22) || month === 4 || (month === 5 && day <= 10)) {
+  message = 'Día de las Madres: agenda tu arreglo con entrega el 10 de mayo.';
+}
+
+// Día del Padre (tercer domingo de junio)
 if (month === 6 && day <= 21) {
-  message = 'Preventa Día del Padre: ¡Reserva su arreglo hoy y sorprende a papá!';
+  message = 'Preventa Día del Padre: ramos de dinero y chocolates para papá.';
 }
 
-// Graduaciones (junio-julio)
-if ((month === 6 && day > 21) || month === 7) {
-  message = 'Temporada de graduaciones: Ramos y arreglos para celebrar este logro';
+// Graduaciones (junio-agosto)
+if ((month === 6 && day > 21) || month === 7 || month === 8) {
+  message = 'Temporada de graduaciones: ramos con chocolates y bandas personalizadas.';
 }
 
-// Día de muertos (1-2 noviembre) — mostrar desde octubre 20
+// Día de Muertos — desde el 20 de octubre
 if ((month === 10 && day >= 20) || (month === 11 && day <= 2)) {
-  message = 'Día de Muertos: Arreglos con cempasúchil y flores de temporada';
+  message = 'Día de Muertos: arreglos con cempasúchil y flor de temporada.';
 }
 
-// Navidad y Año Nuevo (diciembre)
+// Navidad
 if (month === 12) {
-  message = 'Navidad: Arreglos navideños y centros de mesa para tu celebración';
+  message = 'Navidad: centros de mesa y arreglos navideños por pedido.';
 }
 ---
 
 {message && (
-  <div class="seasonal-banner" id="seasonalBanner" aria-live="polite">
-    <div class="seasonal-banner__content">
-      <span class="seasonal-banner__icon" set:html={icon} />
-      <span class="seasonal-banner__text">{message}</span>
-      <a 
-        href="https://wa.me/5212371113802?text=Hola%2C%20vi%20la%20promoción%20de%20temporada%20y%20quiero%20cotizar" 
-        class="seasonal-banner__cta"
+  <div class="banner" id="seasonalBanner">
+    <div class="container banner__inner">
+      <p class="banner__text">{message}</p>
+      <a
+        href="https://wa.me/5212371113802?text=Hola%2C%20vi%20la%20promoción%20de%20temporada%20y%20quiero%20cotizar"
+        class="banner__cta"
         target="_blank"
         rel="noreferrer"
       >
-        Cotizar →
+        Cotizar
       </a>
+      <button class="banner__close" id="closeBanner" aria-label="Cerrar aviso de temporada">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
     </div>
-    <button class="seasonal-banner__close" id="closeBanner" aria-label="Cerrar banner">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
   </div>
 )}
 
-<script>
-  const banner = document.getElementById('seasonalBanner');
-  const closeBtn = document.getElementById('closeBanner');
-  
-  function hideBanner() {
-    if (!banner) return;
-    banner.style.transform = 'translateY(-100%)';
-    banner.style.opacity = '0';
-    setTimeout(() => {
-      banner.style.display = 'none';
-    }, 400);
-  }
-
-  if (closeBtn && banner) {
-    closeBtn.addEventListener('click', hideBanner);
-    setTimeout(hideBanner, 5000); // Se oculta automáticamente después de 5 segundos
-  }
-</script>
-
 <style>
-  .seasonal-banner {
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(90deg, #1e3a8a, #1e40af, #2563eb);
+  .banner {
+    background: var(--wine);
     color: #fff;
     font-size: 0.8125rem;
-    font-weight: 500;
-    line-height: 1.4;
-    text-align: center;
-    padding: 0.5rem 2.5rem;
-    z-index: 200;
+    overflow: hidden;
+    transition: max-height 400ms var(--ease), opacity 300ms var(--ease);
+    max-height: 6rem;
+  }
+
+  .banner.is-hidden {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .banner__inner {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    transition: transform 0.4s ease, opacity 0.4s ease;
-  }
-
-  .seasonal-banner__content {
-    display: flex;
-    align-items: center;
     gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    padding-block: 0.6rem;
   }
 
-  .seasonal-banner__text {
+  .banner__text {
     letter-spacing: 0.01em;
+    text-align: center;
   }
 
-  .seasonal-banner__cta {
-    display: inline-flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-    padding: 0.25rem 0.8rem;
+  .banner__cta {
+    flex-shrink: 0;
+    padding: 0.2rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
     border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: background 0.2s ease;
-    white-space: nowrap;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 220ms var(--ease);
   }
 
-  .seasonal-banner__cta:hover {
-    background: rgba(255, 255, 255, 0.25);
-  }
+  .banner__cta:hover { background: rgba(255, 255, 255, 0.16); }
 
-  .seasonal-banner__close {
+  .banner__close {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: auto;
     background: none;
     border: none;
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s ease;
-    flex-shrink: 0;
-    position: absolute;
-    right: 0.75rem;
+    transition: color 220ms var(--ease);
   }
 
-  .seasonal-banner__close:hover {
-    color: #fff;
-  }
+  .banner__close:hover { color: #fff; }
 
-  @media (max-width: 480px) {
-    .seasonal-banner {
-      padding: 0.5rem 2rem 0.5rem 1rem;
-      font-size: 0.75rem;
-    }
-
-    .seasonal-banner__cta {
-      display: none;
-    }
+  @media (max-width: 640px) {
+    .banner__inner { gap: 0.75rem; }
+    .banner__cta { display: none; }
+    .banner__text { text-align: left; font-size: 0.75rem; }
   }
 </style>
+
+<script>
+  const banner = document.getElementById('seasonalBanner');
+  const closeBanner = document.getElementById('closeBanner');
+  const KEY = 'pm-banner-dismissed';
+
+  if (banner) {
+    // Si ya lo cerraron en esta sesión, no volver a mostrarlo.
+    if (sessionStorage.getItem(KEY) === '1') {
+      banner.remove();
+    } else {
+      closeBanner?.addEventListener('click', () => {
+        banner.classList.add('is-hidden');
+        sessionStorage.setItem(KEY, '1');
+      });
+    }
+  }
+</script>

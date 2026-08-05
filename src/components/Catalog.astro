@@ -1,0 +1,120 @@
+---
+const lines = [
+  {
+    name: 'Flores naturales',
+    body: 'Rosas, gerberas y follaje fresco con nube, envueltos en papel coreano. La opción clásica para cumpleaños y aniversarios.',
+    detail: 'Desde ramo sencillo hasta 24 rosas',
+  },
+  {
+    name: 'Rosas de listón',
+    body: 'Rosas hechas a mano en listón satinado. No se marchitan, así que el detalle se queda de recuerdo mucho después de la fecha.',
+    detail: 'Se conservan por años',
+  },
+  {
+    name: 'Ramos con chocolates',
+    body: 'Combinamos flores o listón con chocolates finos, dulces y mariposas metálicas. El favorito para sorpresas de graduación.',
+    detail: 'Chocolate a elegir',
+  },
+  {
+    name: 'Ramos de dinero',
+    body: 'Billetes doblados en forma de flor sobre una base de rosas o nube. Un regalo práctico que se ve como un arreglo.',
+    detail: 'Tú defines el monto',
+  },
+];
+---
+
+<section class="catalog section" id="catalogo" aria-labelledby="catalog-title">
+  <div class="container">
+    <header class="catalog__header reveal">
+      <div>
+        <span class="section-label">Qué hacemos</span>
+        <h2 class="section-title" id="catalog-title">Cuatro formas de <em>regalar flores</em></h2>
+      </div>
+      <p class="section-body catalog__intro">
+        Todo se arma a mano en el taller. Si tienes una idea distinta o una foto de
+        referencia, la adaptamos a tu presupuesto.
+      </p>
+    </header>
+
+    <ul class="catalog__list" role="list">
+      {lines.map((line, index) => (
+        <li class="catalog__item reveal" style={`transition-delay: ${index * 90}ms;`}>
+          <h3 class="catalog__name">{line.name}</h3>
+          <p class="catalog__body">{line.body}</p>
+          <p class="catalog__detail">{line.detail}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .catalog { background: var(--cream); }
+
+  .catalog__header {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: end;
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .catalog__intro { margin: 0; }
+
+  /* Lista dividida por filetes, sin tarjetas ni franjas decorativas */
+  .catalog__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .catalog__item {
+    padding: clamp(1.75rem, 3vw, 2.5rem) 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .catalog__item:nth-child(odd) { padding-right: clamp(1.5rem, 4vw, 3.5rem); }
+  .catalog__item:nth-child(even) {
+    padding-left: clamp(1.5rem, 4vw, 3.5rem);
+    border-left: 1px solid var(--line);
+  }
+
+  .catalog__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 0.65rem;
+  }
+
+  .catalog__body {
+    font-size: 0.9375rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 42ch;
+    text-wrap: pretty;
+  }
+
+  .catalog__detail {
+    margin-top: 1rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  @media (max-width: 760px) {
+    .catalog__header { grid-template-columns: 1fr; align-items: start; }
+
+    .catalog__list { grid-template-columns: 1fr; }
+
+    .catalog__item:nth-child(odd),
+    .catalog__item:nth-child(even) {
+      padding-inline: 0;
+      border-left: none;
+    }
+  }
+</style>

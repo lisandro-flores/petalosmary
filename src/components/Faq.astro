@@ -2,39 +2,50 @@
 const faqs = [
   {
     q: '¿Con cuánta anticipación debo pedir?',
-    a: 'Para fechas especiales te recomendamos apartar con 2 a 5 días. Para pedidos urgentes, escríbenos y revisamos disponibilidad.',
+    a: 'Para fechas especiales como 10 de mayo, 14 de febrero o graduaciones, aparta con 2 a 5 días. Para pedidos urgentes escríbenos y revisamos disponibilidad del día.',
   },
   {
-    q: '¿Manejan entregas fuera de San José Buenavista?',
-    a: 'Sí, atendemos zonas cercanas como San Marcos Tlacoyalco y otras por acuerdo.',
+    q: '¿Hacen entregas fuera de San José Buenavista?',
+    a: 'Sí. Cubrimos San Marcos Tlacoyalco y comunidades cercanas por acuerdo previo. Confírmanos la dirección al cotizar para checar el costo de entrega.',
   },
   {
-    q: '¿Puedo pedir algo personalizado con presupuesto definido?',
-    a: 'Claro. Compartiendo tu rango de presupuesto te proponemos opciones viables sin perder estilo ni presentación.',
+    q: '¿Puedo pedir algo personalizado con un presupuesto fijo?',
+    a: 'Claro. Compártenos tu rango y te proponemos opciones viables sin sacrificar la presentación: cambiamos tipo de flor, tamaño o envoltura para que entre en el presupuesto.',
   },
   {
     q: '¿Qué métodos de pago aceptan?',
-    a: 'Coordinamos pago por transferencia o efectivo según el tipo de entrega y confirmación del pedido.',
+    a: 'Transferencia o efectivo, según el tipo de entrega. En pedidos grandes o de temporada alta pedimos un anticipo para apartar la fecha.',
+  },
+  {
+    q: '¿Cuánto duran los arreglos?',
+    a: 'Las flores naturales duran entre 5 y 8 días con agua y sombra. Las rosas de listón, los chocolates y los ramos de dinero se conservan indefinidamente.',
   },
 ];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
 ---
 
-<section class="faq section" aria-labelledby="faq-title">
+<section class="faq section" id="preguntas" aria-labelledby="faq-title">
   <div class="container faq__inner">
-    <div class="faq__header reveal">
+    <header class="faq__header reveal">
       <span class="section-label">Preguntas frecuentes</span>
-      <h2 class="section-title" id="faq-title">Resolvemos dudas antes de tu <em>pedido</em></h2>
-      <p class="section-body faq__intro">Todo lo que necesitas saber antes de hacer tu pedido por WhatsApp.</p>
-    </div>
+      <h2 class="section-title" id="faq-title">Antes de <em>escribirnos</em></h2>
+    </header>
 
     <div class="faq__list">
       {faqs.map((item, index) => (
-        <details class="faq__item reveal" style={`transition-delay: ${index * 70}ms;`}>
+        <details class="faq__item reveal" style={`transition-delay: ${index * 60}ms;`}>
           <summary class="faq__question">
-            <span class="faq__question-text">{item.q}</span>
-            <span class="faq__chevron" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-            </span>
+            <span>{item.q}</span>
+            <span class="faq__sign" aria-hidden="true"></span>
           </summary>
           <p class="faq__answer">{item.a}</p>
         </details>
@@ -43,103 +54,79 @@ const faqs = [
   </div>
 </section>
 
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />
+
 <style>
   .faq {
+    background: var(--surface);
     content-visibility: auto;
-    contain-intrinsic-size: 1px 760px;
+    contain-intrinsic-size: 1px 720px;
   }
 
-  .faq__inner {
-    max-width: 720px;
-  }
+  .faq__inner { max-width: 46rem; }
 
-  .faq__header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
+  .faq__header { margin-bottom: clamp(2rem, 4vw, 2.75rem); }
 
-  .faq__intro {
-    margin-inline: auto;
-    margin-top: .9rem;
-  }
+  .faq__list { border-top: 1px solid var(--line); }
 
-  .faq__list {
-    display: flex;
-    flex-direction: column;
-    gap: .75rem;
-  }
-
-  .faq__item {
-    border: 1px solid rgba(239, 232, 235, 0.8);
-    border-radius: 16px;
-    background: rgba(255,255,255,.95);
-    box-shadow: 0 2px 8px rgba(28, 25, 26, 0.02);
-    overflow: hidden;
-    transition: border-color var(--transition), box-shadow var(--transition);
-  }
-
-  .faq__item:hover {
-    border-color: rgba(190, 24, 93, 0.15);
-  }
-
-  .faq__item[open] {
-    border-color: rgba(190, 24, 93, 0.2);
-    box-shadow: 0 4px 16px rgba(172, 28, 84, 0.06);
-  }
+  .faq__item { border-bottom: 1px solid var(--line); }
 
   .faq__question {
     list-style: none;
     cursor: pointer;
-    padding: 1.15rem 1.35rem;
-    font-weight: 600;
-    color: var(--color-text);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    transition: color var(--transition);
-    font-size: 0.95rem;
+    gap: 1.5rem;
+    padding: 1.35rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    transition: color 220ms var(--ease);
   }
 
   .faq__question::-webkit-details-marker { display: none; }
+  .faq__question:hover { color: var(--wine); }
 
-  .faq__question:hover {
-    color: var(--color-primary);
-  }
-
-  .faq__question-text {
-    flex: 1;
-  }
-
-  .faq__chevron {
+  /* Signo +/− dibujado con dos filetes, sin icono externo */
+  .faq__sign {
+    position: relative;
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    background: rgba(239, 232, 235, 0.5);
-    color: var(--color-text-muted);
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background var(--transition), color var(--transition);
+    width: 0.875rem;
+    height: 0.875rem;
   }
 
-  .faq__item[open] .faq__chevron {
-    transform: rotate(180deg);
-    background: rgba(190, 24, 93, 0.08);
-    color: var(--color-primary);
+  .faq__sign::before,
+  .faq__sign::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: var(--wine);
+    transition: transform 320ms var(--ease);
   }
+
+  .faq__sign::after { transform: rotate(90deg); }
+
+  .faq__item[open] .faq__sign::after { transform: rotate(0deg); }
 
   .faq__answer {
-    padding: 0 1.35rem 1.25rem;
-    color: var(--color-text-muted);
-    line-height: 1.75;
+    padding: 0 3rem 1.5rem 0;
     font-size: 0.9375rem;
-    animation: faqSlide 0.3s ease-out;
+    color: var(--muted);
+    line-height: 1.75;
+    text-wrap: pretty;
+    animation: faqReveal 300ms var(--ease);
   }
 
-  @keyframes faqSlide {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
+  @keyframes faqReveal {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 560px) {
+    .faq__answer { padding-right: 0; }
   }
 </style>
