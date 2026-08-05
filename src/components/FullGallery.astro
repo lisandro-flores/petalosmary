@@ -2,429 +2,217 @@
 import { Image, getImage } from 'astro:assets';
 import { FALLBACK_GALLERY, FALLBACK_SPRING } from '../lib/fallback';
 
-// Combinar todas las imágenes
 const allImages = [
-  ...FALLBACK_SPRING.map(img => ({ ...img, type: 'amarillas' })),
-  ...FALLBACK_GALLERY.map(img => ({ ...img, type: img.category })),
+  ...FALLBACK_GALLERY,
+  ...FALLBACK_SPRING.map((img) => ({ ...img, category: 'especiales' as const })),
 ];
-
-const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://petalosmary.ngicode.com';
 
 const optimizedImages = await Promise.all(
   allImages.map(async (img) => {
-    const optImg = await getImage({ src: img.src, format: 'webp', width: 1200 });
+    const optImg = await getImage({ src: img.src, format: 'webp', width: 1200, quality: 80 });
     return { ...img, optimizedSrc: optImg.src };
   })
 );
 ---
 
-{/* Modal principal de la galería (malla de imágenes) */}
-<div class="gallery-modal" id="galleryModal" hidden>
-  <div class="gallery-modal__backdrop" id="closeGallery"></div>
-  
-  <div class="gallery-modal__content">
-    <header class="gallery-modal__header">
-      <h2 class="gallery-modal__title">Todos nuestros trabajos</h2>
-      <button type="button" class="gallery-modal__close" id="closeGalleryBtn" aria-label="Cerrar galería">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+<div class="gallery-sheet" id="galleryModal" role="dialog" aria-modal="true" aria-labelledby="gallerySheetTitle" hidden>
+  <div class="gallery-sheet__backdrop" id="closeGallery"></div>
+
+  <div class="gallery-sheet__panel">
+    <header class="gallery-sheet__header">
+      <div>
+        <span class="section-label">Archivo completo</span>
+        <h2 class="gallery-sheet__title" id="gallerySheetTitle">
+          {optimizedImages.length} arreglos entregados
+        </h2>
+      </div>
+      <button type="button" class="gallery-sheet__close" id="closeGalleryBtn" aria-label="Cerrar galería">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>
     </header>
 
-    <div class="gallery-modal__grid">
-      {optimizedImages.map((img, idx) => (
-        <button
-          type="button"
-          class="gallery-modal__item detail-opener"
-          data-src={img.optimizedSrc}
-          data-alt={img.alt}
-        >
-          <Image
-            src={img.src}
-            alt={img.alt}
-            width={300}
-            height={400}
-            loading="lazy"
-            decoding="async"
-          />
-          <span class="gallery-modal__overlay"></span>
-        </button>
-      ))}
-    </div>
-  </div>
-</div>
-
-{/* Modal de detalle (Ver individual) implementado también aquí para consistencia */}
-<div id="fullgallery-detail-modal" class="detail-modal" style="display: none;">
-  <div class="detail-modal__overlay" data-detail-overlay></div>
-  <div class="detail-modal__content">
-    <button type="button" class="detail-modal__close" data-detail-close>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-    <div class="gallery-modal__img-container">
-      <div id="fullgallery-loader" class="gallery-modal__loader">Cargando...</div>
-      <img id="detail-modal-img" src="" alt="" class="detail-modal__image" style="opacity: 0;" />
-    </div>
-    <div class="detail-modal__footer">
-      <a id="detail-modal-cta" href="" target="_blank" rel="noreferrer" class="detail-modal__cta">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Cotizar con foto
-      </a>
+    <div class="gallery-sheet__scroll">
+      <ul class="gallery-sheet__grid" role="list">
+        {optimizedImages.map((img) => (
+          <li>
+            <button
+              type="button"
+              class="gallery-sheet__item"
+              data-lightbox-item
+              data-lightbox-group="all"
+              data-src={img.optimizedSrc}
+              data-alt={`${img.alt} de Pétalos Mary`}
+              aria-label={`Ampliar ${img.alt}`}
+            >
+              <Image
+                src={img.src}
+                alt={`${img.alt} de Pétalos Mary`}
+                width={420}
+                height={525}
+                quality={72}
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 </div>
 
 <style>
-  /* Modal de malla */
-  .gallery-modal {
+  .gallery-sheet {
     position: fixed;
     inset: 0;
     z-index: 1000;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding: 2.5rem;
-    overflow-y: auto;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--transition);
+    padding: clamp(0.75rem, 3vw, 2.5rem);
   }
 
-  .gallery-modal:not([hidden]) {
-    display: flex;
-    opacity: 1;
-    pointer-events: auto;
-  }
+  .gallery-sheet[hidden] { display: none; }
 
-  .gallery-modal[hidden] {
-    display: none;
-  }
-
-  .gallery-modal__backdrop {
-    position: fixed;
+  .gallery-sheet__backdrop {
+    position: absolute;
     inset: 0;
-    background: rgba(28, 25, 26, 0.4);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    background: color-mix(in srgb, var(--wine-deep) 55%, #000);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: sheetFade 260ms var(--ease);
   }
 
-  .gallery-modal__content {
+  .gallery-sheet__panel {
     position: relative;
-    background: var(--color-bg);
-    border-radius: 2rem;
+    z-index: 2;
     width: 100%;
-    max-width: 1200px;
-    padding: 3.5rem;
-    margin: 2rem 0;
-    box-shadow: 0 32px 80px rgba(28, 25, 26, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    transform: translateY(20px) scale(0.98);
-    transition: transform var(--transition);
-  }
-
-  .gallery-modal:not([hidden]) .gallery-modal__content {
-    transform: translateY(0) scale(1);
-  }
-
-  .gallery-modal__header {
+    max-width: var(--max-w);
+    max-height: 100%;
     display: flex;
+    flex-direction: column;
+    background: var(--cream);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    animation: sheetRise 340ms var(--ease);
+  }
+
+  .gallery-sheet__header {
+    display: flex;
+    align-items: flex-start;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 3.5rem;
+    gap: 1.5rem;
+    padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2.25rem);
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
   }
 
-  .gallery-modal__title {
+  .gallery-sheet__header .section-label { margin-bottom: 0.5rem; }
+
+  .gallery-sheet__title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 500;
-    color: var(--color-text);
-    margin: 0;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 400;
     letter-spacing: -0.02em;
+    color: var(--ink);
   }
 
-  .gallery-modal__close {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    color: var(--color-text);
-    border-radius: 50%;
-    width: 54px;
-    height: 54px;
+  .gallery-sheet__close {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--ink);
     cursor: pointer;
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--transition), background var(--transition), color var(--transition);
+    transition: background var(--transition), color var(--transition), border-color var(--transition);
   }
 
-  .gallery-modal__close:hover {
-    background: var(--color-primary);
+  .gallery-sheet__close:hover {
+    background: var(--wine);
+    border-color: var(--wine);
     color: #fff;
-    border-color: var(--color-primary);
-    transform: rotate(90deg) scale(1.05);
   }
 
-  .gallery-modal__grid {
+  .gallery-sheet__scroll {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 3vw, 2.25rem) clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .gallery-sheet__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(11rem, 100%), 1fr));
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+    list-style: none;
   }
 
-  .gallery-modal__item {
+  .gallery-sheet__item {
     position: relative;
-    aspect-ratio: 4/5;
-    overflow: hidden;
-    border-radius: 1.25rem;
-    background: var(--color-surface);
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--transition), box-shadow var(--transition);
-    border: none;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
     padding: 0;
+    border: none;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--wine-soft);
     cursor: pointer;
+    transition: box-shadow var(--transition);
   }
 
-  .gallery-modal__item img {
+  .gallery-sheet__item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 700ms var(--ease);
   }
 
-  .gallery-modal__item:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg);
-  }
+  .gallery-sheet__item:hover { box-shadow: var(--shadow-md); }
+  .gallery-sheet__item:hover img { transform: scale(1.06); }
 
-  .gallery-modal__item:hover img {
-    transform: scale(1.08);
-  }
-
-  .gallery-modal__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(28,25,26,0.5) 0%, rgba(28,25,26,0) 50%);
-    color: #fff;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: 2rem;
-    font-family: var(--font-body);
-    font-size: 0.9375rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    opacity: 0;
-    transition: opacity var(--transition);
-  }
-
-  .gallery-modal__overlay::after {
-    content: 'Ver';
-    padding: 0.6rem 1.5rem;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.4);
-    border-radius: 999px;
-    transform: translateY(15px);
-    transition: transform var(--transition);
-  }
-
-  .gallery-modal__item:hover .gallery-modal__overlay {
-    opacity: 1;
-  }
-  
-  .gallery-modal__item:hover .gallery-modal__overlay::after {
-    transform: translateY(0);
-  }
-
-  /* Detalle Modal (Ver) */
-  .detail-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 1100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
-
-  .detail-modal__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-
-  .detail-modal__content {
-    position: relative;
-    z-index: 2;
-    background: #fff;
-    border-radius: 2rem;
-    max-width: 500px;
-    width: 100%;
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: modalSlideUp 0.3s ease-out;
-  }
-
-  .detail-modal__close {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 3;
-  }
-
-  .gallery-modal__img-container {
-    position: relative;
-    width: 100%;
-    min-height: 200px;
-    background: #f3f4f6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .gallery-modal__loader {
-    position: absolute;
-    color: #6b7280;
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  .detail-modal__image {
-    width: 100%;
-    max-height: 50vh;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    flex-shrink: 0;
-    transition: opacity 0.3s ease;
-    position: relative;
-    z-index: 2;
-  }
-
-  .detail-modal__footer {
-    padding: 2rem;
-    text-align: center;
-    overflow-y: auto;
-    flex-grow: 1;
-  }
-
-  .detail-modal__alt {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin: 0 0 1.5rem;
-    line-height: 1.5;
-  }
-
-  .detail-modal__cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: #be185d;
-    color: #fff;
-    padding: 0.875rem 2rem;
-    border-radius: 999px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
-    box-shadow: 0 8px 24px rgba(190, 24, 93, 0.25);
-  }
-
-  @keyframes modalSlideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 640px) {
-    .gallery-modal { padding: 1rem; }
-    .gallery-modal__content { padding: 2rem 1.5rem; border-radius: 1.5rem; }
-    .gallery-modal__header { margin-bottom: 2.5rem; }
-    .gallery-modal__grid { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .gallery-modal__item { aspect-ratio: 1; }
-    .gallery-modal__overlay::after { padding: 0.4rem 1rem; font-size: 0.8rem; }
+  @keyframes sheetFade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes sheetRise {
+    from { opacity: 0; transform: translateY(20px) scale(0.99); }
+    to   { opacity: 1; transform: none; }
   }
 </style>
 
 <script>
-  // Malla principal
-  const modal = document.getElementById('galleryModal');
-  const openBtns = document.querySelectorAll('.open-gallery-btn');
+  const sheet = document.getElementById('galleryModal');
   const closeBtn = document.getElementById('closeGalleryBtn');
   const backdrop = document.getElementById('closeGallery');
+  let opener: HTMLElement | null = null;
 
-  function openModal() {
-    modal?.removeAttribute('hidden');
+  const openSheet = (trigger: HTMLElement) => {
+    if (!sheet) return;
+    opener = trigger;
+    sheet.hidden = false;
     document.body.style.overflow = 'hidden';
-  }
+    closeBtn?.focus();
+  };
 
-  function closeModal() {
-    modal?.setAttribute('hidden', '');
+  const closeSheet = () => {
+    if (!sheet || sheet.hidden) return;
+    sheet.hidden = true;
     document.body.style.overflow = '';
-  }
+    opener?.focus();
+  };
 
-  openBtns.forEach(btn => btn.addEventListener('click', openModal));
-  closeBtn?.addEventListener('click', closeModal);
-  backdrop?.addEventListener('click', closeModal);
-
-  // Detalle individual (Ver)
-  const detailModal = document.getElementById('fullgallery-detail-modal');
-  const detailImg = document.getElementById('detail-modal-img') as HTMLImageElement | null;
-  const detailCta = document.getElementById('detail-modal-cta') as HTMLAnchorElement | null;
-
-  function openDetail(src: string, alt: string) {
-    if (!detailModal || !detailImg || !detailCta) return;
-    
-    // Show loader
-    detailImg.style.opacity = '0';
-    detailImg.onload = () => { detailImg.style.opacity = '1'; };
-
-    detailImg.src = src;
-    detailImg.alt = alt;
-
-    const imgUrl = window.location.origin + (src.startsWith('/') ? src : '/' + src);
-    const whatsappText = `Hola, me interesa este arreglo.\n\nImagen: ${imgUrl}`;
-    detailCta.href = `https://wa.me/5212371113802?text=${encodeURIComponent(whatsappText)}`;
-
-    detailModal.style.display = 'flex';
-  }
-
-  function closeDetail() {
-    if (detailModal) detailModal.style.display = 'none';
-  }
-
-  document.querySelectorAll<HTMLElement>('.detail-opener').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const src = btn.dataset.src;
-      const alt = btn.dataset.alt;
-      if (src && alt) openDetail(src, alt);
-    });
+  document.querySelectorAll<HTMLElement>('.open-gallery-btn').forEach((btn) => {
+    btn.addEventListener('click', () => openSheet(btn));
   });
 
-  document.querySelectorAll('[data-detail-close], [data-detail-overlay]').forEach(el => {
-    el.addEventListener('click', closeDetail);
-  });
+  closeBtn?.addEventListener('click', closeSheet);
+  backdrop?.addEventListener('click', closeSheet);
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      if (detailModal && detailModal.style.display === 'flex') {
-        closeDetail();
-      } else if (!modal?.hasAttribute('hidden')) {
-        closeModal();
-      }
-    }
+  document.addEventListener('keydown', (event) => {
+    const lightboxOpen = !document.getElementById('lightbox')?.hasAttribute('hidden');
+    if (event.key === 'Escape' && !lightboxOpen) closeSheet();
   });
 </script>
